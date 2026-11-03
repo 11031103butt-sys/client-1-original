@@ -1,5 +1,41 @@
-node_modules
-# Keep environment variables out of version control
-.env
+# Dependencies
+node_modules/
 
-/generated/prisma
+# Environment Variables
+.env
+.env.*
+!.env.example
+
+# Generated Prisma
+/generated/prisma/
+
+# Next.js
+.next/
+out/
+
+# Claude
+/claude/
+
+# Agents
+/agents/
+
+# Windsurf
+/windsurf/
+
+# Build Files
+/dist/
+/build/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
