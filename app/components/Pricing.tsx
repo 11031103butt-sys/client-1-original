@@ -2,11 +2,14 @@
 
 import { useState } from "react";
 import { ArrowRight, Check, Clock3 } from "lucide-react";
-import { microPrices, pricing, pricingTabs } from "./data";
+import { pricingData, pricingTabs } from "./pricedata";
 import { scrollToSection as go } from "./scroll";
 
 export default function Pricing() {
-  const [serviceTab, setServiceTab] = useState("Expert Opinion Letters");
+  const [serviceTab, setServiceTab] = useState(pricingTabs[0]);
+
+  const category =
+    pricingData.find((c) => c.tab === serviceTab) ?? pricingData[0];
 
   return (
     <section id="pricing" className="section pricingSection">
@@ -18,8 +21,9 @@ export default function Pricing() {
             <em> Flexible options.</em>
           </h2>
           <p>
-            Choose the level of support that fits the complexity and timing of
-            your documentation need.
+            Professionally prepared immigration documentation designed to
+            clearly present your qualifications, achievements, and supporting
+            evidence.
           </p>
         </div>
 
@@ -35,52 +39,65 @@ export default function Pricing() {
           ))}
         </div>
 
-        <div className="pricingGrid">
-          {pricing.map((plan) => (
-            <article
-              className={plan.popular ? "priceCard popularCard" : "priceCard"}
-              key={plan.name}
-            >
-              {plan.popular && <div className="popularTag">MOST REQUESTED</div>}
-
-              <h3>{plan.name}</h3>
-
-              <div className="bigPrice">
-                {plan.price}
-                <small>starting</small>
-              </div>
-
-              <div className="time">
-                <Clock3 />
-                {plan.time}
-              </div>
-
-              <p>{plan.desc}</p>
-
-              <div className="features">
-                {plan.features.map((feature) => (
-                  <span key={feature}>
-                    <Check />
-                    {feature}
-                  </span>
-                ))}
-              </div>
-
-              <button onClick={() => go("contact")}>
-                {plan.popular ? "Choose Professional" : "Get Started"}
-                <ArrowRight />
-              </button>
-            </article>
-          ))}
+        {/* Category ki intro */}
+        <div className="center categoryIntro">
+          <h3>{category.tagline}</h3>
+          {category.desc && <p>{category.desc}</p>}
+          {category.categories && (
+            <p className="supported">
+              <b>Categories supported:</b> {category.categories}
+            </p>
+          )}
         </div>
 
-        <div className="microPrices">
-          {microPrices.map(([label, price]) => (
-            <div key={label}>
-              <b>{label}</b>
-              <span>{price}</span>
-            </div>
-          ))}
+        <div className="pricingGrid">
+          {category.items.map((item) => {
+            const isQuote = !item.price;
+
+            return (
+              <article className="priceCard" key={item.name}>
+                <h3>{item.name}</h3>
+
+                <div className="bigPrice">
+                  {item.price ?? "Custom Quote"}
+                  {item.price && <small>standard</small>}
+                </div>
+
+                {category.time && (
+                  <div className="time">
+                    <Clock3 />
+                    {category.time}
+                  </div>
+                )}
+
+                {/* Card ki apni detail, warna category ki */}
+                <p>{item.desc ?? category.desc}</p>
+
+                {category.features.length > 0 && (
+                  <div className="features">
+                    {category.features.map((feature) => (
+                      <span key={feature}>
+                        <Check />
+                        {feature}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                {isQuote && (
+                  <p className="quoteNote">
+                    Please contact us for a personalized quote by filling in
+                    the form.
+                  </p>
+                )}
+
+                <button onClick={() => go("contact")}>
+                  {isQuote ? "Request a Quote" : "Get Started"}
+                  <ArrowRight />
+                </button>
+              </article>
+            );
+          })}
         </div>
 
         <p className="note">
@@ -92,3 +109,5 @@ export default function Pricing() {
     </section>
   );
 }
+
+
