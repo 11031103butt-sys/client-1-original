@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+enum ImmigrationCategory {
+  H1B
+  EB1A
+  EB1B
+  EB2_NIW
+  O1
+  L1
+  OTHER
+}
+
+enum ServiceType {
+  EXPERT_OPINION_LETTER
+  RECOMMENDATION_LETTER
+  CREDENTIAL_EVALUATION
+  POSITION_EVALUATION
+  RFE_NOID_SUPPORT
+  NOT_SURE
+}
+
+enum InquiryStatus {
+  NEW
+  IN_REVIEW
+  CONTACTED
+  CLOSED
+}
+
+model ContactInquiry {
+  id           String              @id @default(cuid())
+  name         String
+  email        String
+  category     ImmigrationCategory?
+  service      ServiceType?
+  message      String              @db.Text
+  acceptedTerms Boolean            @default(false)
+  status       InquiryStatus       @default(NEW)
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+
+  @@index([email])
+  @@index([status, createdAt])
+}
