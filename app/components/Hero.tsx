@@ -1,6 +1,7 @@
 "use client";
 
 import { ArrowRight, Check, ShieldCheck } from "lucide-react";
+import Link from "next/link";
 import { scrollToSection as go } from "./scroll";
 
 export default function Hero() {
@@ -23,20 +24,37 @@ export default function Hero() {
           </p>
 
           <div className="buttons">
-            <button className="btn primary" onClick={() => go("contact")}>
-              Start Your Case
-              <ArrowRight size={18} />
-            </button>
+            <Link
+              href="/services"
+              className="btn primary"
+              style={{ textDecoration: "none" }}
+            >
+              Select a service
+              <ArrowRight size={16} />
+            </Link>
+
             <button className="btn secondary" onClick={() => go("services")}>
               View Our Services
             </button>
           </div>
 
           <div className="heroChecks">
-            <span><Check />USCIS-focused documentation*</span>
-            <span><Check />AACRAO EDGE methodology*</span>
-            <span><Check />Field-specific expertise</span>
-            <span><Check />Confidential handling</span>
+            <span>
+              <Check />
+              USCIS-focused documentation*
+            </span>
+            <span>
+              <Check />
+              AACRAO EDGE methodology*
+            </span>
+            <span>
+              <Check />
+              Field-specific expertise
+            </span>
+            <span>
+              <Check />
+              Confidential handling
+            </span>
           </div>
         </div>
 

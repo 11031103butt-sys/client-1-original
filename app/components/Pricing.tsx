@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { ArrowRight, Check, Clock3 } from "lucide-react";
+import Link from "next/link";
 import { pricingData, pricingTabs } from "./pricedata";
 import { scrollToSection as go } from "./scroll";
 
@@ -91,10 +92,22 @@ export default function Pricing() {
                   </p>
                 )}
 
-                <button onClick={() => go("contact")}>
-                  {isQuote ? "Request a Quote" : "Get Started"}
-                  <ArrowRight />
-                </button>
+                {/* agar quote chahiye to contact section, warna /services page */}
+                {isQuote ? (
+                  <button onClick={() => go("contact")}>
+                    Request a Quote
+                    <ArrowRight size={16} />
+                  </button>
+                ) : (
+                  <Link
+  href={`/services/${encodeURIComponent(item.name.toLowerCase().replace(/\s+/g, "-"))}`}
+  className="btn"
+  style={{ textDecoration: "none" }}
+>
+  Get Started
+  <ArrowRight size={16} />
+</Link>
+                )}
               </article>
             );
           })}
@@ -109,5 +122,3 @@ export default function Pricing() {
     </section>
   );
 }
-
-

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { scrollToSection } from "./scroll";
+import Link from "next/link";
 
 const navItems = [
   ["services", "Services"],
@@ -24,6 +25,7 @@ export default function Header() {
   return (
     <header className="header">
       <div className="wrap nav">
+        {/* Logo */}
         <button
           className="logo"
           onClick={() => go("home")}
@@ -36,22 +38,30 @@ export default function Header() {
           </span>
         </button>
 
+        {/* Navigation Links */}
         <nav className={menu ? "links show" : "links"}>
           {navItems.map(([id, label]) => (
             <button key={id} onClick={() => go(id)}>
               {label}
             </button>
           ))}
-          <button className="navCta" onClick={() => go("contact")}>
-            Start Your Case
+
+          {/* /services Page Link Button */}
+          <Link
+            href="/services"
+            className="navCta"
+            onClick={() => setMenu(false)}
+          >
+            Select a service
             <ArrowRight size={16} />
-          </button>
+          </Link>
         </nav>
 
+        {/* Mobile Hamburger Button */}
         <button
           className="hamburger"
           onClick={() => setMenu(!menu)}
-          aria-label="Open menu"
+          aria-label="Toggle menu"
         >
           {menu ? <X /> : <Menu />}
         </button>
