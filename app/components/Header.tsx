@@ -4,22 +4,35 @@ import { useState } from "react";
 import { ArrowRight, Menu, X } from "lucide-react";
 import { scrollToSection } from "./scroll";
 import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 
 const navItems = [
-  ["services", "Services"],
-  ["pricing", "Pricing"],
-  ["why", "Why Immigra"],
-  ["about", "About"],
-  ["faq", "FAQ"],
-  ["contact", "Contact"]
+  { id: "services", label: "Services", type: "link", href: "/services" },
+  { id: "pricing", label: "Pricing", type: "scroll" },
+  { id: "why-immigra", label: "Why Immigra", type: "link", href: "/why-immigra" },
+  { id: "about", label: "About", type: "link", href: "/about" },
+  { id: "faq", label: "FAQ", type: "link", href: "/faq" },
+  { id: "contact", label: "Contact", type: "scroll" }
 ];
 
 export default function Header() {
   const [menu, setMenu] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
 
-  const go = (id: string) => {
-    scrollToSection(id);
+  const handleNavClick = (item: { id: string; type: string; href?: string }) => {
     setMenu(false);
+
+    if (item.type === "link" && item.href) {
+      router.push(item.href);
+    } else {
+      // Agar hum home page ("/") par nahi hain, toh pehle home par jayein phir section par scroll karein
+      if (pathname !== "/") {
+        router.push(`/#${item.id}`);
+      } else {
+        scrollToSection(item.id);
+      }
+    }
   };
 
   return (
@@ -28,7 +41,14 @@ export default function Header() {
         {/* Logo */}
         <button
           className="logo"
-          onClick={() => go("home")}
+          onClick={() => {
+            setMenu(false);
+            if (pathname !== "/") {
+              router.push("/");
+            } else {
+              scrollToSection("home");
+            }
+          }}
           aria-label="Immigra Evaluations home"
         >
           <span className="logoIcon">IE</span>
@@ -40,9 +60,9 @@ export default function Header() {
 
         {/* Navigation Links */}
         <nav className={menu ? "links show" : "links"}>
-          {navItems.map(([id, label]) => (
-            <button key={id} onClick={() => go(id)}>
-              {label}
+          {navItems.map((item) => (
+            <button key={item.id} onClick={() => handleNavClick(item)}>
+              {item.label}
             </button>
           ))}
 

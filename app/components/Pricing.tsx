@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { ArrowRight, Check, Clock3 } from "lucide-react";
 import Link from "next/link";
-import { pricingData, pricingTabs } from "./pricedata";
+import { pricingData, pricingTabs, slugify } from "./pricedata";
 import { scrollToSection as go } from "./scroll";
 
 export default function Pricing() {
@@ -54,6 +54,7 @@ export default function Pricing() {
         <div className="pricingGrid">
           {category.items.map((item) => {
             const isQuote = !item.price;
+            const serviceSlug = slugify(item.name);
 
             return (
               <article className="priceCard" key={item.name}>
@@ -100,13 +101,13 @@ export default function Pricing() {
                   </button>
                 ) : (
                   <Link
-  href={`/services/${encodeURIComponent(item.name.toLowerCase().replace(/\s+/g, "-"))}`}
-  className="btn"
-  style={{ textDecoration: "none" }}
->
-  Get Started
-  <ArrowRight size={16} />
-</Link>
+                    href={`/services/${serviceSlug}`}
+                    className="btn"
+                    style={{ textDecoration: "none" }}
+                  >
+                    Get Started
+                    <ArrowRight size={16} />
+                  </Link>
                 )}
               </article>
             );

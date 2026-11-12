@@ -1,109 +1,133 @@
 "use client";
 
-import { ArrowRight, Check, Clock3 } from "lucide-react";
+import { ArrowRight, Check, Clock3, ClipboardList, FileText, SearchCheck, PackageCheck } from "lucide-react";
 import Link from "next/link";
-import { pricingData } from "@/app/components/pricedata"; // اپنے pricedata کا صحیح پاتھ چیک کر لیں
+import { pricingData, slugify } from "@/app/components/pricedata";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import { scrollToSection as go } from "@/app/components/scroll";
+import s from "./services.module.css";
+
+const steps = [
+  { icon: ClipboardList, title: "Choose a service", text: "Pick the option below that matches your case." },
+  { icon: FileText, title: "Share your details", text: "Tell us about your background and send your documents." },
+  { icon: SearchCheck, title: "We prepare and check", text: "Your documents are put together and reviewed for completeness." },
+  { icon: PackageCheck, title: "Receive your package", text: "You get a finished, organised set that is ready to submit." },
+];
 
 export default function Services() {
-  // نام کو کلین سلگ بنانے کا فنکشن
-  const slugify = (text: string) =>
-    text.toLowerCase().replace(/,/g, "").replace(/\s+/g, "-");
-
   return (
     <>
       <Header />
-      <section id="services" className="section servicesSection">
-        <div className="wrap">
-          {/* Header Section */}
-          <div className="center">
-            <div className="eyebrow">WHAT WE OFFER</div>
-            <h2>
-              Tailored immigration services.
-              <em> Designed for your success.</em>
-            </h2>
-            <p>
-              Comprehensive documentation and petition preparation tailored to meet the strict standards of U.S. immigration authorities.
+      <main className={s.page}>
+        {/* HERO: what this page is, in one glance */}
+        <section className={s.hero}>
+          <div className={s.wrap}>
+            <h1 className={s.h1}>Choose the immigration document service you need.</h1>
+            <p className={s.lead}>
+              We prepare the documents and petition materials for your U.S. immigration case.
+              Find your category, check the price, and start.
             </p>
-          </div>
 
-          {/* PricingData سے کیٹگریز اور آئٹمز کو لوپ کرنا */}
-          {pricingData.map((category) => (
-            <div key={category.tab} className="categoryGroup" style={{ marginTop: "50px" }}>
-              {/* کیٹگری کا ٹائٹل اور ٹیگ لائن */}
-              <div className="center categoryIntro" style={{ marginBottom: "30px" }}>
-                <span className="eyebrow" style={{ fontSize: "0.8rem", color: "var(--primary)" }}>{category.tab}</span>
-                <h3 style={{ fontSize: "1.75rem", marginTop: "5px" }}>{category.tagline}</h3>
-                {category.desc && <p style={{ maxWidth: "700px", margin: "10px auto 0" }}>{category.desc}</p>}
-                {category.categories && (
-                  <p className="supported" style={{ marginTop: "10px", fontSize: "0.9rem" }}>
-                    <b>Categories supported:</b> {category.categories}
-                  </p>
-                )}
+            <nav className={s.jump} aria-label="Service categories">
+              <span className={s.jumpLabel}>Jump to:</span>
+              {pricingData.map((c) => (
+                <a key={c.tab} href={`#${slugify(c.tab)}`} className={s.chip}>
+                  {c.tab}
+                </a>
+              ))}
+            </nav>
+          </div>
+        </section>
+
+        {/* HOW IT WORKS: a real sequence, so numbering is meaningful */}
+        <section className={s.how} aria-labelledby="how-title">
+          <div className={s.wrap}>
+            <h2 id="how-title" className={s.h2small}>How it works</h2>
+            <ol className={s.steps}>
+              {steps.map(({ icon: Icon, title, text }, i) => (
+                <li key={title} className={s.step}>
+                  <span className={s.stepNum}>{i + 1}</span>
+                  <Icon size={20} aria-hidden="true" className={s.stepIcon} />
+                  <div>
+                    <strong>{title}</strong>
+                    <p>{text}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </section>
+
+        {/* CATEGORIES */}
+        {pricingData.map((category) => (
+          <section key={category.tab} id={slugify(category.tab)} className={s.group}>
+            <div className={s.wrap}>
+              <div className={s.groupHead}>
+                <div className={s.groupText}>
+                  <h2 className={s.h2}>{category.tab}</h2>
+                  <p className={s.tagline}>{category.tagline}</p>
+                  {category.desc && <p className={s.muted}>{category.desc}</p>}
+                  {category.categories && (
+                    <p className={s.muted}>
+                      <b>Who this is for:</b> {category.categories}
+                    </p>
+                  )}
+                </div>
+
+                {/* Shared info shown ONCE per group instead of on every card */}
+                <aside className={s.included} aria-label={`Included in every ${category.tab} service`}>
+                  {category.time && (
+                    <div className={s.time}>
+                      <Clock3 size={16} aria-hidden="true" />
+                      <span>Typical turnaround: <b>{category.time}</b></span>
+                    </div>
+                  )}
+                  {category.features?.length > 0 && (
+                    <>
+                      <strong className={s.includedTitle}>Included in every service here</strong>
+                      <ul>
+                        {category.features.map((f) => (
+                          <li key={f}>
+                            <Check size={15} aria-hidden="true" />
+                            {f}
+                          </li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
+                </aside>
               </div>
 
-              {/* اس کیٹگری کے تمام آئٹمز کا گرڈ */}
-              <div className="servicesGrid">
+              <div className={s.grid}>
                 {category.items.map((item) => {
-                  const serviceSlug = slugify(item.name);
                   const isQuote = !item.price;
-
                   return (
-                    <article className="serviceCard" key={item.name}>
-                      <div className="cardHeader" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                        <span className="audienceTag" style={{ fontWeight: 600, fontSize: "0.85rem" }}>
-                          {category.tab}
-                        </span>
-                        <div className="bigPrice" style={{ fontWeight: "bold" }}>
-                          {item.price ?? "Custom Quote"}
-                          {item.price && <small style={{ fontWeight: "normal", fontSize: "0.75rem" }}> standard</small>}
+                    <article className={s.card} key={item.name}>
+                      <h3 className={s.cardTitle}>{item.name}</h3>
+                      <p className={s.cardDesc}>{item.desc ?? category.desc}</p>
+
+                      <div className={s.cardBottom}>
+                        <div className={s.price}>
+                          {isQuote ? (
+                            <>
+                              <span className={s.priceMain}>Custom quote</span>
+                              <span className={s.priceNote}>Price depends on your case</span>
+                            </>
+                          ) : (
+                            <>
+                              <span className={s.priceMain}>{item.price}</span>
+                              <span className={s.priceNote}>Standard price</span>
+                            </>
+                          )}
                         </div>
-                      </div>
-
-                      <h3 style={{ margin: "15px 0 10px" }}>{item.name}</h3>
-
-                      {category.time && (
-                        <div className="time" style={{ display: "flex", alignItems: "center", gap: "6px", marginBottom: "12px", fontSize: "0.85rem", opacity: 0.8 }}>
-                          <Clock3 size={15} />
-                          <span>{category.time}</span>
-                        </div>
-                      )}
-
-                      <p className="description" style={{ marginBottom: "20px" }}>
-                        {item.desc ?? category.desc}
-                      </p>
-
-                      {/* Features List */}
-                      {category.features.length > 0 && (
-                        <div className="features" style={{ marginBottom: "20px" }}>
-                          <strong style={{ display: "block", marginBottom: "8px", fontSize: "0.9rem" }}>Key Highlights:</strong>
-                          {category.features.map((feature) => (
-                            <span key={feature} style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "0.9rem", marginBottom: "6px" }}>
-                              <Check size={15} color="green" />
-                              {feature}
-                            </span>
-                          ))}
-                        </div>
-                      )}
-
-                      {/* Footer Action Button */}
-                      <div className="cardFooter" style={{ marginTop: "auto" }}>
                         <Link
-                          href={`/services/${serviceSlug}`}
-                          className="btn"
-                          style={{
-                            textDecoration: "none",
-                            display: "inline-flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            gap: "8px",
-                            width: "100%"
-                          }}
+                          href={`/services/${slugify(item.name)}`}
+                          className={isQuote ? s.btnOutline : s.btn}
+                          aria-label={`${isQuote ? "Request a quote for" : "Start"} ${item.name}`}
                         >
-                          {isQuote ? "Request a Quote" : "Get Started"}
-                          <ArrowRight size={16} />
+                          {isQuote ? "Request a quote" : "Start this service"}
+                          <ArrowRight size={16} aria-hidden="true" />
                         </Link>
                       </div>
                     </article>
@@ -111,20 +135,23 @@ export default function Services() {
                 })}
               </div>
             </div>
-          ))}
+          </section>
+        ))}
 
-          {/* Bottom Callout */}
-          <div className="servicesCallout center" style={{ marginTop: "80px" }}>
-            <h3>Need a Customized Documentation Strategy?</h3>
-            <p>
-              We understand every case is unique. Contact us today to discuss your specific profile and requirements.
+        {/* HELP CTA */}
+        <section className={s.help}>
+          <div className={s.wrap}>
+            <h2 className={s.h2}>Not sure which service fits you?</h2>
+            <p className={s.lead}>
+              Tell us about your situation and we will point you to the right option.
             </p>
-            <button onClick={() => go("contact")} className="ctaButton" style={{ marginTop: "20px", display: "inline-flex", alignItems: "center", gap: "8px" }}>
-              Schedule a Consultation <ArrowRight size={16} />
+            <button type="button" onClick={() => go("contact")} className={s.btnLight}>
+              Book a consultation
+              <ArrowRight size={16} aria-hidden="true" />
             </button>
           </div>
-        </div>
-      </section>
+        </section>
+      </main>
       <Footer />
     </>
   );

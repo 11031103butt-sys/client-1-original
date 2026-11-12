@@ -1,6 +1,8 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { scrollToSection as go } from "./scroll";
+import Link from "next/link";
 
 const serviceLinks = [
   "Expert Opinion Letters",
@@ -10,13 +12,23 @@ const serviceLinks = [
 ];
 
 const companyLinks = [
-  ["why", "Why Immigra"],
-  ["about", "About"],
-  ["faq", "FAQ"],
-  ["contact", "Contact"]
+  { id: "why-immigra", label: "Why Immigra", type: "link", href: "/why-immigra" },
+  { id: "about", label: "About", type: "link", href: "/about" },
+  { id: "faq", label: "FAQ", type: "link", href: "/faq" },
+  { id: "contact", label: "Contact", type: "scroll" }
 ];
 
 export default function Footer() {
+  const router = useRouter();
+
+  const handleCompanyClick = (item: { id: string; type: string; href?: string }) => {
+    if (item.type === "link" && item.href) {
+      router.push(item.href);
+    } else {
+      go(item.id);
+    }
+  };
+
   return (
     <footer className="footer">
       <div className="wrap footerGrid">
@@ -34,7 +46,7 @@ export default function Footer() {
         <div>
           <h4>Services</h4>
           {serviceLinks.map((label) => (
-            <button key={label} onClick={() => go("services")}>
+            <button key={label} onClick={() => router.push("/services")}>
               {label}
             </button>
           ))}
@@ -42,9 +54,9 @@ export default function Footer() {
 
         <div>
           <h4>Company</h4>
-          {companyLinks.map(([id, label]) => (
-            <button key={id} onClick={() => go(id)}>
-              {label}
+          {companyLinks.map((item) => (
+            <button key={item.id} onClick={() => handleCompanyClick(item)}>
+              {item.label}
             </button>
           ))}
         </div>
@@ -52,7 +64,10 @@ export default function Footer() {
 
       <div className="wrap footerBottom">
         <span>© 2026 Immigra Evaluations. All rights reserved.</span>
-        <span>Privacy · Terms</span>
+        <span>
+          <Link href="/privacy" className="hover:underline">Privacy</Link> ·{" "}
+          <Link href="/terms" className="hover:underline">Terms</Link>
+        </span>
       </div>
 
       <div className="wrap disclaimer">

@@ -1,60 +1,77 @@
 import {
   Award,
+  Briefcase,
   FileCheck2,
   GraduationCap,
   MessageSquareText,
+  ShieldCheck,
   UsersRound
 } from "lucide-react";
+import { pricingData } from "./pricedata";
 
+/* ---------- Services (guide ke mutabiq 7 services) ---------- */
 export const services = [
   {
     icon: FileCheck2,
     title: "Expert Opinion Letters",
-    copy: "Independent, field-specific professional analysis tailored to the evidentiary needs of your U.S. immigration matter.",
-    chips: ["H-1B", "EB-1", "EB-2 NIW", "O-1"]
+    copy: "Tailored evaluations written by qualified university professors or industry experts to establish specialized knowledge, position complexity, or extraordinary ability.",
+    chips: ["H-1B", "E-3", "EB-1A/B/C", "EB-2 NIW", "O-1A/B", "L-1A/B"]
+  },
+  {
+    icon: MessageSquareText,
+    title: "RFE / NOID Response",
+    copy: "Structured drafting assistance for responding to Requests for Evidence (RFE) and Notices of Intent to Deny (NOID) issued by USCIS.",
+    chips: ["EB-1A/B/C", "EB-2 NIW", "O-1A/B", "L-1A/B"]
   },
   {
     icon: UsersRound,
     title: "Recommendation Letters",
-    copy: "Professionally developed letters that communicate your achievements, contributions, expertise and impact with clarity.",
-    chips: ["EB-1A", "EB-2 NIW", "O-1"]
-  },
-  {
-    icon: GraduationCap,
-    title: "Credential Evaluations",
-    copy: "Clear evaluation of international education and credentials for U.S. immigration and professional purposes.",
-    chips: ["Course-by-Course", "Document-by-Document"]
+    copy: "Customized, persuasive reference letters drafted to highlight specific criteria required for high-skilled and extraordinary ability visa categories.",
+    chips: ["EB-1A/B", "EB-2 NIW", "O-1A/B"]
   },
   {
     icon: Award,
-    title: "Position Evaluations",
-    copy: "Detailed analysis of job duties, requirements, education and experience for specialty-occupation and related matters.",
-    chips: ["H-1B", "L-1", "RFE Support"]
+    title: "Position Evaluation",
+    copy: "Comprehensive analysis of job descriptions to verify specialty occupation status or executive/managerial level functions.",
+    chips: ["Custom quote"]
   },
   {
-    icon: MessageSquareText,
-    title: "RFE & NOID Support",
-    copy: "Focused documentation support built around the specific evidentiary issue identified in your USCIS notice.",
-    chips: ["RFE", "NOID", "Case Review"]
+    icon: GraduationCap,
+    title: "Credential Evaluation",
+    copy: "Formal academic and work experience evaluations to establish U.S. degree equivalency.",
+    chips: ["Custom quote"]
+  },
+  {
+    icon: Briefcase,
+    title: "Professional / Business Plans",
+    copy: "Detailed business plans and national interest narratives structured for EB-2 NIW, L-1, and E-2 petitions.",
+    chips: ["EB-2 NIW", "L-1", "E-2"]
+  },
+  {
+    icon: ShieldCheck,
+    title: "Petition Verification & Quality Review",
+    copy: "Thorough audit and review of existing petition packets to ensure consistency, strong evidence alignment, and technical accuracy prior to submission.",
+    chips: ["Custom quote"]
   }
 ];
 
+/* ---------- FAQ (sirf wahi jawab badle jo guide se takrate the) ---------- */
 export const faq = [
   [
     "What is an Expert Opinion Letter?",
-    "An Expert Opinion Letter is a professional assessment prepared by a qualified expert to address a defined issue relevant to an immigration matter. The scope and evidence considered depend on the engagement."
+    "An Expert Opinion Letter is a tailored evaluation written by a qualified university professor or industry expert to establish specialized knowledge, position complexity, or extraordinary ability."
   ],
   [
     "What is the difference between an Expert Opinion Letter and a Recommendation Letter?",
-    "An expert opinion generally provides independent professional analysis. A recommendation letter is an endorsement from someone who knows the beneficiary or their work and can discuss achievements, contributions or qualifications."
+    "An expert opinion generally provides independent professional analysis. A recommendation letter is a reference letter drafted to highlight specific criteria for high-skilled and extraordinary ability categories, based on the expert's background, key contributions and critical roles."
   ],
   [
     "Which immigration categories do you support?",
-    "Our documentation services support employment-based matters including H-1B, EB-1A, EB-1B, EB-2 NIW, O-1 and L-1, subject to the facts and requirements of the particular engagement."
+    "We support H-1B, E-3, EB-1A, EB-1B, EB-1C, EB-2 NIW, O-1A, O-1B, L-1A and L-1B, depending on the service. Business plans also cover E-2 petitions."
   ],
   [
     "Can you help with an RFE or NOID?",
-    "Yes. We can review the notice and supplied materials to identify documentation needs and determine whether an expert opinion, evaluation or related professional document is appropriate."
+    "Yes. We analyze the challenge points raised by USCIS, bring together supporting evidence, and draft technical expert arguments for your response."
   ],
   [
     "Do you guarantee USCIS approval?",
@@ -70,79 +87,47 @@ export const faq = [
   ],
   [
     "How quickly can I receive my document?",
-    "Turnaround varies by service, complexity, expert availability and selected package. Your confirmed scope and delivery timeframe will be provided before work begins."
+    "Expert Opinion Letters take 2 to 5 business days, RFE / NOID responses 3 to 5 business days, and Recommendation Letters 2 to 3 business days."
+  ],
+  [
+    "How is pricing set for evaluations and plans?",
+    "Position Evaluations, Credential Evaluations, Business Plans and Petition Verification are quoted individually based on scope, complexity and case needs. Fill in the contact form for a personalized quote."
   ]
 ];
 
-export const pricing = [
-  {
-    name: "Essential",
-    price: "$495",
-    time: "Standard turnaround",
-    desc: "For a clearly defined documentation need.",
-    popular: false,
-    features: [
-      "Case & document review",
-      "Customized document",
-      "Expert matching where applicable",
-      "1 revision round",
-      "Standard processing"
-    ]
-  },
-  {
-    name: "Professional",
-    price: "$675",
-    time: "5–7 business days",
-    desc: "For a more tailored engagement with deeper analysis.",
-    popular: true,
-    features: [
-      "Everything in Essential",
-      "Expanded evidence analysis",
-      "Enhanced customization",
-      "2 revision rounds",
-      "Priority case support"
-    ]
-  },
-  {
-    name: "Priority",
-    price: "$875",
-    time: "2–3 business days*",
-    desc: "For time-sensitive or more complex documentation.",
-    popular: false,
-    features: [
-      "Everything in Professional",
-      "Priority processing",
-      "Expedited delivery where available",
-      "Complexity review",
-      "Dedicated coordination"
-    ]
-  }
-];
+/* ---------- Pricing (ab pricedata.ts se hi banta hai, taake ek hi source rahe) ---------- */
+export const pricing = pricingData.map((c) => ({
+  name: c.tab,
+  time: c.time,
+  desc: c.desc,
+  features: c.features,
+  items: c.items.map((i) => [i.name, i.price ?? "Custom quote"] as [string, string])
+}));
 
-export const pricingTabs = [
-  "Expert Opinion Letters",
-  "Recommendation Letters",
-  "Credential Evaluations",
-  "Position Evaluations",
-  "RFE Support"
-];
+export const pricingTabs = pricingData.map((c) => c.tab);
 
+/* ---------- Categories ---------- */
 export const categories = [
   ["H-1B", "Specialty Occupation"],
+  ["E-3", "Specialty Occupation"],
   ["EB-1A", "Extraordinary Ability"],
   ["EB-1B", "Outstanding Researchers & Professors"],
+  ["EB-1C", "Multinational Executives & Managers"],
   ["EB-2 NIW", "National Interest Waiver"],
-  ["O-1", "Individuals of Extraordinary Ability"],
-  ["L-1", "Intracompany Transferees"]
+  ["O-1A / O-1B", "Extraordinary Ability"],
+  ["L-1A", "Intracompany Executive / Manager"],
+  ["L-1B", "Specialized Knowledge"]
 ];
 
+/* ---------- "Starting from" prices ---------- */
 export const microPrices = [
-  ["Recommendation Letters", "From $395"],
-  ["Course-by-Course Evaluations", "From $175"],
-  ["Position Evaluations", "From $455"],
-  ["RFE Review", "From $150"]
+  ["Expert Opinion Letters", "From $499"],
+  ["RFE / NOID Response", "From $799"],
+  ["Recommendation Letters", "$599"],
+  ["Evaluations, Plans & Reviews", "Custom quote"]
 ];
 
+/* ---------- Pehle wali file se jyon ke tyon wapas (guide ka hissa nahi) ---------- */
 export const benefits = [
   ["Specialized focus", "We focus on professional immigration documentation—not general travel or visa processing."],
   ["300+ experts*", "Our panel spans diverse academic, technical and professional disciplines."],

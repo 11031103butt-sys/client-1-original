@@ -96,3 +96,11 @@ export const pricingData: PricingCategory[] = [
 ];
 
 export const pricingTabs = pricingData.map((c) => c.tab);
+
+// مشترکہ slugify فنکشن جو تمام لنکس کو 100% درست میچ کرے گا
+export const slugify = (text: string) =>
+  text
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
