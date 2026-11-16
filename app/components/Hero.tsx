@@ -19,7 +19,7 @@ export default function Hero() {
 
           <p className="lead">
             Expert opinion letters, recommendation letters, credential
-            evaluations, position evaluations and RFE support — prepared around
+            evaluations, position evaluations and RFE support, prepared around
             the evidence that matters to your case.
           </p>
 
