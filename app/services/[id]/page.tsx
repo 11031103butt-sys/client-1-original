@@ -6,6 +6,7 @@ import Link from "next/link";
 import { pricingData, slugify } from "@/app/components/pricedata";
 import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
+import PayButton from "@/app/components/paystack/PayButton";
 
 export default function ServiceDetail() {
   const params = useParams();
@@ -145,33 +146,17 @@ export default function ServiceDetail() {
             )}
 
             <div
-              className="buttons"
-              style={{ display: "flex", gap: "15px", marginTop: "40px" }}
-            >
-              <Link
-                href="/#contact"
-                className="btn primary"
-                style={{
-                  textDecoration: "none",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "8px",
-                }}
-              >
-                Request This Service <ArrowRight size={16} />
-              </Link>
-              <Link
-                href="/services"
-                className="btn secondary"
-                style={{
-                  textDecoration: "none",
-                  display: "inline-flex",
-                  alignItems: "center",
-                }}
-              >
-                View All Services
-              </Link>
-            </div>
+  className="buttons"
+  style={{ display: "flex", flexDirection: "column", gap: "18px", marginTop: "40px" }}
+>
+  <PayButton serviceId={serviceId} price={foundItem.price} />
+  <Link
+    href="/services"
+    style={{ textDecoration: "none", opacity: 0.75, fontSize: "0.95rem" }}
+  >
+    ← View All Services
+  </Link>
+</div>
           </div>
         </div>
       </section>
