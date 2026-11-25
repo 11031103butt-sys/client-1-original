@@ -1,4 +1,5 @@
-"use client";
+"use client"
+import Link from "next/link";
 
 import { ArrowRight, Check, Clock3, ClipboardList, FileText, SearchCheck, PackageCheck } from "lucide-react";
 import Link from "next/link";
@@ -145,10 +146,13 @@ export default function Services() {
             <p className={s.lead}>
               Tell us about your situation and we will point you to the right option.
             </p>
-            <button type="button" onClick={() => go("contact")} className={s.btnLight}>
-              Book a consultation
-              <ArrowRight size={16} aria-hidden="true" />
-            </button>
+            <Link href="/#contact" className={s.btnLight}>
+
+  Book a consultation
+
+  <ArrowRight size={16} aria-hidden="true" />
+
+</Link>
           </div>
         </section>
       </main>
